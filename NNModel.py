@@ -14,7 +14,8 @@ def Binary_NN_Model(units, iter, tr_data, tr_lab, ts_data,ts_lab, lr = 0.001):
        Output:
        Training error, test error
     '''
-    parameters = weight_initialization(units, tr_data.shape[1])
+    assert units[-1] == 1, 'Last layer must have 1 unit por BNN'
+    parameters = random_weight_initialization(units, tr_data.shape[1])
     cost_record = []
     for _ in range(iter):
         pred = forward_propagation(parameters,tr_data)
