@@ -4,11 +4,10 @@ def activation(activation):
     aux = activation.lower()
     return activations[aux]
 
-def softmax(x):
-    #acuerdate de añadir al diccionario activationsla variable y el valor
-    pass
+def sigmoid(X):
+    return 1 / (1 + np.exp(-X))
 
-def relu(x):
-    pass
+def relu(X):
+    return np.maximum(X, 0)
 
-activations = {'softmax' : softmax, 'relu' : relu}
+activations = {'softmax' : sigmoid, 'relu' : relu}
