@@ -6,12 +6,13 @@ def backward_propagation(parameters, cache, activations, cost_function,tr_labels
     model_activations, final_activation = activations
     grads = {}
     d_A_i = costs_grads(cost_function)(parameters['pred'],tr_labels)
-
-    for i in range(len(parameters.keys)/2,0,-1):
-        dZ = compute_gradient(d_A_i, cache['A' + str(i - 1)], cache['Z' + str(i)], grads, model_activations, i)
+    layers = len(parameters.keys)/2
+    dZ = compute_gradient(d_A_i, cache['A' + str(layers - 1)], cache['Z' + str(layers)], grads, final_activation, layers)
+    for i in range(layers - 1,0,-1):
         #backpropagate
         d_A_i = parameters['W'+ str(i)] @ dZ
-        # This still makes a backpropagation that we do not need----------------
+        #compute gradients
+        dZ = compute_gradient(d_A_i, cache['A' + str(layers - 1)], cache['Z' + str(layers)], grads, model_activations, layers)
     return grads
 
 
