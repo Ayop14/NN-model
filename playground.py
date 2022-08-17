@@ -1,0 +1,18 @@
+import numpy as np
+from NNModel import *
+
+
+data = np.genfromtxt('fraud_detection_bank_dataset.csv', delimiter=',', skip_header = 1)
+
+#preparing dataset
+np.random.seed(3)
+N = data.shape[0]
+perm = np.random.permutation(N)
+data = data[perm].T
+
+tr_data = data[:N,:int(0.9 * N)]
+tr_lab = data[-1,:int(0.9 * N), np.newaxis]
+ts_data = data[:N,int(0.9 * N):]
+ts_lab = data[-1,int(0.9 * N):,np.newaxis]
+
+Binary_NN_Model([6,1], 100, ('relu','sigmoid'), tr_data, tr_lab, ts_data,ts_lab, lr = 0.008)

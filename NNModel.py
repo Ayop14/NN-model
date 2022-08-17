@@ -4,11 +4,17 @@ from Forward_propagation import *
 from Backward_propagation import *
 from cost_functions import * 
 
+def update_parameters(parameters,grads, lr):
+    for i in range(len(parameters.keys())/2):
+        parameters['W'+str(i)] = parameters['W'+str(i)] - lr * grads['W'+str(i)]
+        parameters['b'+str(i)] = parameters['b'+str(i)] - lr * grads['b'+str(i)]
+
 #Vectorized implementation of the binary NN model
-def Binary_NN_Model(units, iter, tr_data, tr_lab, ts_data,ts_lab, lr = 0.001):
+def Binary_NN_Model(units, iter, activations, tr_data, tr_lab, ts_data,ts_lab, lr = 0.001):
     '''Input:
         units: list indicating number of units for each layer 
         iter: n of iterations optimizing the model
+        activations: tuple of str for model and output activations ('relu', 'sigmoid')
         numpy data matrices for the model
         lr: Learning rate of the model
        Output:
@@ -17,8 +23,20 @@ def Binary_NN_Model(units, iter, tr_data, tr_lab, ts_data,ts_lab, lr = 0.001):
     assert units[-1] == 1, 'Last layer must have 1 unit por BNN'
     parameters = random_weight_initialization(units, tr_data.shape[1])
     cost_record = []
+    #training
     for _ in range(iter):
-        pred = forward_propagation(parameters,tr_data)
-        cost = compute_cost(pred, tr_lab)
+        pred, cache = forward_propagation(parameters,tr_data, activations)
+        cost = log_reg_cost(pred, tr_lab)
         cost_record.append(cost)
-        parameters = backward_propagation()
+        parameters_grads = backward_propagation(parameters, cache, activations, 'log_reg',tr_lab)
+        update_parameters(parameters, parameters_grads, lr)
+    #testing
+    test_pred, _ = forward_propagation(parameters,ts_data, activations)
+    tr_pred = forward_propagation(parameters,tr_data, activations)
+    test_pred = test_pred >= 0.5
+    tr_pred = tr_pred >= 0.5
+    test_err = np.sum(test_pred != ts_lab)/ len(ts_lab)
+    trai_err = np.sum(tr_pred != tr_lab)/ len(ts_lab)
+    return test_err, trai_err
+
+
