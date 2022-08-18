@@ -28,7 +28,6 @@ def Binary_NN_Model(units, iter, activations, tr_data, tr_lab, ts_data,ts_lab, l
     #training
     for _ in range(iter):
         print('iter------------------')
-        breakpoint()
         pred, cache = forward_propagation(parameters,tr_data, activations)
         cost = log_reg_cost(pred, tr_lab)
         cost_record.append(cost)
