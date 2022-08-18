@@ -2,7 +2,7 @@ import numpy as np
 from Activations import * 
 def forward_propagation(parameters,tr_data, activations):
     X = tr_data
-    cache = {}
+    cache = {'A0':tr_data}
     model_activation, final_activation = activations
     for i in range(len(parameters.keys())//2 - 1):
         X = parameters['W' + str(i+1)] @ X + parameters['b' + str(i + 1)]
