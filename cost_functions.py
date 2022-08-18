@@ -6,4 +6,6 @@ def log_reg_cost(pred, tr_lab):
 
 def log_reg_cost_grad(A, Y):
     return -Y/A + (1-Y)/(1-A)
-costs = {'log_reg': log_reg_cost, 'log_reg_grad': log_reg_cost_grad}
+
+costs = {'log_reg': log_reg_cost}
+costs_grads = {'log_reg': log_reg_cost_grad}
