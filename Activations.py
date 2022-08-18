@@ -17,5 +17,5 @@ def relu(X):
 def grad_relu(X):
     np.sum(X >= 0, axis = 0, keepdims = True)
 
-activations = {'softmax' : sigmoid, 'relu' : relu}
+activations = {'sigmoid' : sigmoid, 'relu' : relu}
 activations_grads = {'softmax' : grad_sigmoid, 'relu' : grad_relu}
