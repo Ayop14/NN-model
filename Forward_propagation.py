@@ -13,5 +13,5 @@ def forward_propagation(parameters,tr_data, activations):
     X = parameters['W' + str(i+2)] @ X + parameters['b' + str(i + 2)]
     cache['Z' + str(i+2)] = X
     X = activation(final_activation)(X)
-    cache['pred'] = X
+    cache['A2'] = X
     return X, cache

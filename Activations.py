@@ -17,5 +17,11 @@ def relu(X):
 def grad_relu(X):
     return np.sum(X >= 0, axis = 0, keepdims = True)
 
-activations = {'sigmoid' : sigmoid, 'relu' : relu}
-activations_grads = {'sigmoid' : grad_sigmoid, 'relu' : grad_relu}
+def tanh(X):
+    return np.tanh(X)
+
+def grad_tanh(X):
+    return 1 - np.power(X,2)
+
+activations = {'sigmoid' : sigmoid, 'relu' : relu, 'tanh' : tanh}
+activations_grads = {'sigmoid' : grad_sigmoid, 'relu' : grad_relu, 'tanh' : grad_tanh}

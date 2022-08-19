@@ -15,5 +15,5 @@ tr_lab = data[-1, np.newaxis,:int(0.9 * N)]
 ts_data = data[:N,int(0.9 * N):]
 ts_lab = data[-1, np.newaxis,int(0.9 * N):]
 
-test_err, trai_err = Binary_NN_Model([6,1], 100, ('relu','sigmoid'), tr_data, tr_lab, ts_data,ts_lab, lr = 0.008)
+test_err, trai_err = Binary_NN_Model([1], 100, ('sigmoid','sigmoid'), tr_data, tr_lab, ts_data,ts_lab, lr = 0.008)
 print(test_err, trai_err)
